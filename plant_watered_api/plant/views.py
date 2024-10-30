@@ -1,7 +1,9 @@
 from datetime import datetime
+from http import HTTPMethod
 
 from rest_framework import viewsets,status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from plant.models import Plant
 from plant.serializers import (
@@ -43,3 +45,10 @@ class PlantViewSet(viewsets.ModelViewSet):
     
     def destroy(self, request, *args, **kwargs):
         return Response({"detail": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=[HTTPMethod.GET, HTTPMethod.POST], detail=True)
+    def mark_watered(self, request, pk):
+        plant = self.get_object()
+        plant.last_watered_date = datetime.now().date()
+        plant.save()
+        return Response({"detail": "Last watered date updated successfully."}, status=status.HTTP_200_OK)
