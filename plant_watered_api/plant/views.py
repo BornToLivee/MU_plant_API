@@ -40,3 +40,6 @@ class PlantViewSet(viewsets.ModelViewSet):
         plant.save()
 
         return Response({"detail": "Last watered date updated successfully."}, status=status.HTTP_200_OK)
+    
+    def destroy(self, request, *args, **kwargs):
+        return Response({"detail": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
