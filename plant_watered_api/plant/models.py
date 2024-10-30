@@ -13,7 +13,9 @@ class Plant(models.Model):
     def is_watered(self):
         if not self.last_watered_date:
             return False
-        return (datetime.now().date() - self.last_watered_date) < timedelta(days=self.water_frequency_days)
+        return (datetime.now().date() - self.last_watered_date) < timedelta(
+            days=self.water_frequency_days
+        )
 
     def __str__(self):
         return self.name
